@@ -9,7 +9,7 @@ api_key = "421e28f9e40b05f6974d0fdc39099dec"
 
 # Window Settings
 home = Tk()
-home.geometry('800x400+200+200')
+home.geometry('900x500')
 home.resizable(0, 0)
 home.title('Orų programėlė')
 home.configure(bg="#f0f0f0")
@@ -38,16 +38,25 @@ def search():
             citytemp = y["temp"]
             cityweather_description = z[0]["description"]
 
-            Label1=Label(home, font='Helvetica 42 bold', bg="#f0f0f0", foreground="red",text='' + str(round(citytemp)) + '°C')
+            Label1=Label(home, font='Helvetica 52 bold', bg="#f0f0f0", foreground="red",text='' + str(round(citytemp)) + '°C')
             Label1.place(x=30, y=150)
             Label2=Label(home, font='Helvetica 21 bold', bg="#f0f0f0", text= textfield.get() +  ":"  ' ' + str(cityname))
             Label2.place(x=390, y=180)
-            Label3=Label(home, font='Helvetica 21 bold', bg="#f0f0f0", text='Vėjas' + ' '  + str(citywind) + ' m/s')
+            Label3=Label(home, font='Helvetica 21 bold', bg="#f0f0f0", text='Vėjas' + ":" ' '  + str(citywind) + ' m/s')
             Label3.place(x=390, y=260)
-            Label4=Label(home, font='Helvetica 21 bold', bg="#f0f0f0", text='Šiuo metu' + ' '  + str(cityweather_description))
+            Label4=Label(home, font='Helvetica 21 bold', bg="#f0f0f0", text='Šiuo metu' + ":" ' '  + str(cityweather_description))
             Label4.place(x=390, y=220)
-            Label5 = Label(home, font='Helvetica 21 bold', bg="#f0f0f0",text='Šiandien' ' ' + str(dt))
+            Label5 = Label(home, font='Helvetica 21 bold', bg="#f0f0f0", text='Šiandien' + ":"' ' + str(dt))
             Label5.place(x=390, y=300)
+
+w=Label(text="Šiandien:", font=("arial", 20, "bold"))
+w.place(x=390, y=300)
+b=Label(text="Šiuo metu:", font=("arial", 20, "bold"))
+b.place(x=390, y=220)
+r=Label(text="Vėjas:", font=("arial", 20, "bold"))
+r.place(x=390, y=260)
+q=Label(text="Miestas:", font=("arial", 20, "bold"))
+q.place(x=390, y=180)
 
 Search_image=PhotoImage(file="search.png")
 myimage=Label(image=Search_image)
