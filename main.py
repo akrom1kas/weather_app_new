@@ -1,32 +1,25 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
-import requests, base64
-from PIL import Image, ImageTk
-import datetime
+import requests
+import time
 
 # Api key
 api_key = "421e28f9e40b05f6974d0fdc39099dec"
 
+# Window Settings
 home = Tk()
-home.geometry('400x400')
+home.geometry('800x400+200+200')
 home.resizable(0, 0)
 home.title('Orų programėlė')
-home.configure(bg="#1e202b")
+home.configure(bg="#f0f0f0")
+dt = time.strftime("%H:%M")
 
-dt = datetime.datetime.now()
-
-# Background image
-img = Image.open('weather_icons/bg.jpg')
-img = img.resize((600, 500), Image.ANTIALIAS)
-img_photo = ImageTk.PhotoImage(img)
-bg_lbl = tk.Label(home, image=img_photo)
-bg_lbl.place(x=0, y=0, width=600, height=500)
-
-
+# # Background image
+home.iconbitmap('sunrise.ico')
 
 def search():
-    city = cit.get()
+    city = textfield.get()
     if city == '':
         return messagebox.showerror('Klaida', 'įveskite miestą')
     else:
@@ -43,30 +36,35 @@ def search():
             cityname = x["sys"]["country"]
             citywind = x["wind"]["speed"]
             citytemp = y["temp"]
-            citypressure = y["pressure"]
-            cityhumidity = y["humidity"]
-            icon_name = x['weather'][0]["icon"]
             cityweather_description = z[0]["description"]
 
-            def get_icon_data(self):
-                icon_id = x['weather'][0]["icon"]
-                url = 'http://openweathermap.org/img/wn/{icon}.png'.format(icon=icon_id)
-                response = requests.get(url, stream=True)
-                return base64.encodebytes(response.raw.read())
+            Label1=Label(home, font='Helvetica 42 bold', bg="#f0f0f0", foreground="red",text='' + str(round(citytemp)) + '°C')
+            Label1.place(x=30, y=150)
+            Label2=Label(home, font='Helvetica 21 bold', bg="#f0f0f0", text= textfield.get() +  ":"  ' ' + str(cityname))
+            Label2.place(x=390, y=180)
+            Label3=Label(home, font='Helvetica 21 bold', bg="#f0f0f0", text='Vėjas' + ' '  + str(citywind) + ' m/s')
+            Label3.place(x=390, y=260)
+            Label4=Label(home, font='Helvetica 21 bold', bg="#f0f0f0", text='Šiuo metu' + ' '  + str(cityweather_description))
+            Label4.place(x=390, y=220)
+            Label5 = Label(home, font='Helvetica 21 bold', bg="#f0f0f0",text='Šiandien' ' ' + str(dt))
+            Label5.place(x=390, y=300)
 
-            Label(home, font='Helvetica 24 bold', bg="#1e202b", foreground="red",text='' + str(round(citytemp)) + '°C').place(x=100, y=120)
-            Label(home, font='Helvetica 12 bold', bg="#1e202b", foreground="white", text= cit.get() + ":" ' ' + str(cityname)).place(x=100, y=180)
-            Label(home, font='Helvetica 12 bold', bg="#1e202b", foreground="white", text='Vėjo greitis: ' + str(citywind) + ' m/s').place(x=100, y=210)
-            Label(home, font='Helvetica 12 bold', bg="#1e202b", foreground="white", text='Šiuo metu: ' + str(cityweather_description)).place(x=100, y=240)
-            Label(home, font='Helvetica 12 bold', bg="#1e202b", foreground="white", text='Drėgmė: ' + str(cityhumidity)).place(x=100, y=270)
-            Label(home, font='Helvetica 12 bold', bg="#1e202b", foreground="white", text='Atmosferos slėgis: ' + str(citypressure) + ' hPa').place(x=100, y=300)
-            Label(home, font='Helvetica 12 bold', bg="#1e202b", foreground="white", text='Šiandien' ' ' + str(dt)).place(x=100, y=330)
+Search_image=PhotoImage(file="search.png")
+myimage=Label(image=Search_image)
+myimage.place(x=20,y=20)
 
-cit = StringVar()
+textfield=tk.Entry(home, justify="center", width=17, font=("poppins", 25, "bold"),bg="#404040", border=0,fg="white",)
+textfield.place(x=50, y=40)
+textfield.focus()
 
-Label(home, font='Helvetica 12 bold', bg="#1e202b", foreground="white", text='Įveskite miestą :').place(x=130, y=10)
-Entry(home, font='Helvetica 12 bold', bg="#1e202b", foreground="white", textvariable=cit).place(x=100, y=40)
-Button(home, text='Vykdyti', font='Helvetica 10 bold', bg="#074986", foreground="white", command=search).place(x=160, y=80)
+Search_icon=PhotoImage(file="search_icon.png")
+myimage_icon=Button(image=Search_icon, borderwidth=0, cursor="hand2", bg="#404040",command=search)
+myimage_icon.place(x=400, y=34)
+
+Weather_icon=PhotoImage(file="logoweather.png")
+myimage=Label(image=Weather_icon)
+myimage.place(x=150,y=150)
+
 
 
 home.mainloop()
